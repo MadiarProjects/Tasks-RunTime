@@ -27,6 +27,7 @@ public class Task2 {
         if (query != null) {
             httpExchange.sendResponseHeaders(200, 0);
             names.add(params.toString().split("=")[1]);
+            //jcba
         }
         if (query != null) {
             httpExchange.sendResponseHeaders(200, 0);
