@@ -1,15 +1,13 @@
-package lesson23.Class_HttpServer;
+package lesson23.ClassHttpServer;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Handler;
 
 public class Task2 {
     public static void main(String[] args) throws IOException {

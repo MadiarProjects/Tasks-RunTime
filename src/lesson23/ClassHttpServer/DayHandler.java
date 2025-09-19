@@ -1,11 +1,10 @@
-package lesson23.Class_HttpServer;
+package lesson23.ClassHttpServer;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.text.NumberFormat;
 import java.time.DayOfWeek;
 import java.time.format.TextStyle;
 import java.util.Locale;

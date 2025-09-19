@@ -1,4 +1,4 @@
-package lesson23.Class_HttpServer;
+package lesson23.ClassHttpServer;
 
 import com.sun.net.httpserver.HttpServer;
 
