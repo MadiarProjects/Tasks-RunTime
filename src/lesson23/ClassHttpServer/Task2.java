@@ -13,28 +13,8 @@ public class Task2 {
     public static void main(String[] args) throws IOException {
         HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
         server.createContext("/calculate",Task2::calculateHandler);
-        server.createContext("/hello",Task2::handleHistory);
-        server.start();
-    }
-    static List<String> names = new ArrayList<>();
-    static List<String> lastNames = new ArrayList<>();
-    public static void handleHistory(HttpExchange httpExchange) throws IOException{
-        String query = httpExchange.getRequestURI().getQuery();
-        String str="";
-        String [] params = str.split("&");
-        if (query != null) {
-            httpExchange.sendResponseHeaders(200, 0);
-            names.add(params.toString().split("=")[1]);
-            //jcba
-        }
-        if (query != null) {
-            httpExchange.sendResponseHeaders(200, 0);
-            lastNames.add(params.toString().split("=")[1]);
-        }
 
-        try(OutputStream os =httpExchange.getResponseBody()) {
-            os.write(str.getBytes());
-        }
+        server.start();
     }
 
     public static void calculateHandler(HttpExchange httpExchange) throws IOException {

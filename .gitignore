@@ -28,5 +28,7 @@ bin/
 ### Mac OS ###
 .DS_Store
 
-
 .idea
+.gitignore
+ForStudyJava.iml
+/src/lesson23/ClassHttpServer/
