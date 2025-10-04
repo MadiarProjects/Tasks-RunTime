@@ -32,5 +32,6 @@ public class Task2 {
         double rates = object.getAsJsonObject("rates").get("KZT").getAsDouble();
         double total = amount / rates;
         System.out.printf("%d тенге в %s будет: %.2f%n", amount, currency, total);
+        //
     }
 }
