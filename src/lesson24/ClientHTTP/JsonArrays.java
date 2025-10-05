@@ -10,6 +10,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.Period;
 import java.util.*;
 
 public class JsonArrays {
@@ -55,11 +56,13 @@ public class JsonArrays {
         for (JsonElement album : albums) {
             String nameOfMusic = album.getAsJsonObject().get("name").getAsString();
             int playCount = album.getAsJsonObject().get("playcount").getAsInt();
-            System.out.println(" - " + nameOfMusic + "(" + playCount + "playCount)");
-            String mbid = album.getAsJsonObject().get("mbid").getAsString();
-            if (mbid==null){
+            System.out.println(" - " + nameOfMusic + "(" + playCount + " playCount)");
+            String mbid;
+            JsonElement isMbidNull = album.getAsJsonObject().get("mbid");
+            if (isMbidNull == null) {
                 continue;
-            }else {
+            } else {
+                mbid = isMbidNull.getAsString();
                 musicsInfo(mbid);
             }
         }//task2 end
@@ -74,19 +77,45 @@ public class JsonArrays {
                 .build();
         HttpResponse<String> responseForMUsics = clientForMusics.send(requestForMUsics, HttpResponse.BodyHandlers.ofString());
         JsonObject object = JsonParser.parseString(responseForMUsics.body()).getAsJsonObject();
-        JsonArray track = object.getAsJsonObject("album").getAsJsonObject("tracks").get("track").getAsJsonArray();
-        String nameOfMusic = "";
-        int timeOfMusic = 0;
-
-        for (int i = 0; i < 10; i++) {
-            if (track.size() < 10) {
-                break;
+        JsonElement isAlbumNull = object.get("album");
+        if (isAlbumNull == null) {
+            System.out.println("album is null");
+            return;
+        } else if (isAlbumNull.getAsJsonObject().get("tracks") == null) {
+            System.out.println("tracks is null");
+            return;
+        } else {
+            JsonElement tracksIsNotNull = isAlbumNull.getAsJsonObject().getAsJsonObject("tracks").get("track");
+            JsonArray track = null;
+            String nameOfMusic = "";
+            int timeOfMusic = 0;
+            if (Objects.requireNonNull(tracksIsNotNull).isJsonArray()) {
+                track = tracksIsNotNull.getAsJsonArray();
+            } else {
+                JsonElement isTimeOfMusicNull = tracksIsNotNull.getAsJsonObject().get("duration");
+                if (isTimeOfMusicNull == null||isTimeOfMusicNull.isJsonNull()) {
+                    System.out.println("duration of this music is null");
+                    return;
+                }
+                nameOfMusic = tracksIsNotNull.getAsJsonObject().get("name").getAsString();
+                timeOfMusic = isTimeOfMusicNull.getAsInt();
+                System.out.println(nameOfMusic + "(" + timeOfMusic + " seconds)");
+                return;
             }
-            timeOfMusic = track.get(i).getAsJsonObject().get("duration").getAsInt();
-            nameOfMusic = track.get(i).getAsJsonObject().get("name").getAsString();
-            System.out.println(nameOfMusic + "(" + timeOfMusic + " seconds)");
-        }
+            if (track == null || track.size() < 10) {
+                return;
+            }
+            for (int i = 0; i < 10; i++) {
+                JsonElement isTimeOfMusicNull = track.get(i).getAsJsonObject().get("duration");
+                if (isTimeOfMusicNull == null || isTimeOfMusicNull.isJsonNull()) {
+                    continue;
+                }
+                nameOfMusic = track.get(i).getAsJsonObject().get("name").getAsString();
+                timeOfMusic = track.get(i).getAsJsonObject().get("duration").getAsInt();
+                System.out.println(nameOfMusic + "(" + timeOfMusic + " seconds)");
 
+            }
+        }
     }
 }
 
