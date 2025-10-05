@@ -57,7 +57,7 @@ public class JsonArrays {
             int playCount = album.getAsJsonObject().get("playcount").getAsInt();
             System.out.println(" - " + nameOfMusic + "(" + playCount + "playCount)");
             String mbid = album.getAsJsonObject().get("mbid").getAsString();
-            if (mbid.isEmpty()){
+            if (mbid==null){
                 continue;
             }else {
                 musicsInfo(mbid);
