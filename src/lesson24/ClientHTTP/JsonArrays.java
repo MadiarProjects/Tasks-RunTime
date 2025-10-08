@@ -130,10 +130,11 @@ public class JsonArrays {
 
 
     public static void musicJenre(String nameOfMusic) throws IOException, InterruptedException {
-        URI uri = URI.create("https://ws.audioscrobbler.com/2.0/?method=track.getinfo&artist=" + nameOfAutor + "&track=" + nameOfMusic.trim().replace("\"", " ").replace(" ", "&20") + "&format=json&api_key=31c6a431b77159b2e385bc83d1be07db");
+        URI uri = URI.create("https://ws.audioscrobbler.com/2.0/?method=track.getinfo&artist=" + nameOfAutor + "&track=" + nameOfMusic.trim().replace(" ", "%20").replace("\"", "") + "&format=json&api_key=31c6a431b77159b2e385bc83d1be07db");
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest requestForGenre = HttpRequest
                 .newBuilder()
+                .GET()
                 .uri(uri)
                 .build();
         HttpResponse<String> responseForGenre = client.send(requestForGenre, HttpResponse.BodyHandlers.ofString());
