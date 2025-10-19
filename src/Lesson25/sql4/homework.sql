@@ -48,7 +48,7 @@ insert into library (id_of_book, data_when_book_given, id_who_took_book)
 values (1, '2021-10-10', 4),
        (1, '2021-11-10', 3),
        (3, '2021-10-14', 3);
-select persons.name as reader, library.id_of_book as idOfBook, books.discreption as nameOfBook
+select persons.name as reader, library.id_of_book as idOfBook ,library.data_when_book_given as data, books.discreption as nameOfBook
 from persons
          join library on persons.id = library.id_who_took_book
          join books on library.id_of_book = books.id;
