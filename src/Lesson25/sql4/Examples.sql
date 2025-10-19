@@ -1,11 +1,12 @@
 --оператор like
 insert into persons (last_name, first_name, age)
 values ('Jonathan','John',25),
-       ('Steve','Lupora',35);
+       ('Steve','Lupora',35),
+       ('Jayob','Danile',18);
 update persons set first_name ='Steve' where id=2;
 select id
 from persons
-where first_name like '%%';
+where first_name ilike '%%';
 -- 1. WHERE name LIKE 'a%'- Находит любые значения начинающиеся с «a»
 -- 2. WHERE name LIKE '%a'- Находит любые значения, заканчивающиеся на «а»
 -- 3. WHERE name LIKE '%at%' - Находит любые значения, у которых есть «at» в любой позиции.
@@ -32,3 +33,16 @@ from persons
 where first_name IN (Select name from developers);
 
 --оператор BETWEEN
+select *
+from persons
+where age BETWEEN 25 and 35;
+--NOT BETWEEN в обратку
+
+select *
+from persons
+where age between 25 and 35
+and id not in (1,3);
+
+
+--joins
+
