@@ -24,17 +24,15 @@ create table persons
 create table books
 (
     id          serial primary key,
-    discreption varchar(100) not null
+    discreption varchar(100) not null,
+    author_id   int references persons (id)
 );
-
 create table library
 (
-    data_when_book_given date not null unique
+    id_of_book           int references books (id),
+    data_when_book_given date not null ,
+    id_who_took_book     int references persons (id)
 );
-insert into library (id_of_book, data_when_book_given, id_who_took_book)
-values (1, '2021-10-10', 4),
-       (1, '2021-11-10', 3),
-       (3, '2021-10-14', 3);
 insert into persons(name)
 values ('John'),
        ('Alex'),
@@ -46,20 +44,10 @@ values ('Beast and Princess', 1),
        ('Romeo and Juelette', 2),
        ('The way to red planet', 2),
        ('Prince Percie', 3);
-alter table persons
-    add id_reading_book int references books (id);
-alter table persons
-    add data_took_book date references library (data_when_book_given);
-alter table books
-    add author_id int references persons (id);
-alter table library
-    add id_of_book int references books (id);
-alter table library
-    add id_who_took_book int references persons (id);
-
-select persons.name as author_of_book, books.discreption as name_of_book
-from persons
-         join books on persons.id = books.author_id;
+insert into library (id_of_book, data_when_book_given, id_who_took_book)
+values (1, '2021-10-10', 4),
+       (1, '2021-11-10', 3),
+       (3, '2021-10-14', 3);
 select persons.name as reader, library.id_of_book as idOfBook, books.discreption as nameOfBook
 from persons
          join library on persons.id = library.id_who_took_book
