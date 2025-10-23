@@ -46,3 +46,55 @@ and id not in (1,3);
 
 --joins
 
+--inner joins
+CREATE TABLE city
+(
+    id
+         SERIAL PRIMARY KEY ,
+    name VARCHAR(20) NOT NULL
+);
+INSERT INTO city (name) VALUES ('Москва');
+INSERT INTO city (name) VALUES ('Санкт-Петербург');
+INSERT INTO city (name) VALUES ('Казань');
+
+CREATE TABLE person
+(
+    name
+            VARCHAR(20) NOT NULL,
+    city_Id INTEGER     NOT NULL
+);
+INSERT INTO person (name, city_id) VALUES ('Андрей', 1);
+INSERT INTO person (name, city_id) VALUES ('Леонид', 2);
+INSERT INTO person (name, city_id) VALUES ('Сергей', 1);
+INSERT INTO person (name, city_id) VALUES ('Григорий', 4);
+--left join
+select person.name,city.name
+from person
+left join city on person.city_Id = city.id ;
+--right join on
+select city.name,person.name
+from person
+right join city on city.id = person.city_Id;
+--full join
+select *
+from person
+full join city on person.city_Id = city.id;
+--UNION
+select name
+from person
+union
+select first_name from persons where first_name ilike '%o%';
+--GROUP BY
+select category as name,sum(price)
+from sales
+group by category;
+select product_name as name,sum(price) as total_price
+from sales
+group by name
+order by total_price;
+--предложение HAVING
+select count(*)as num,category
+from sales
+group by category
+having count(*)>6;
+
