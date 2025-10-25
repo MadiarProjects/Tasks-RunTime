@@ -85,7 +85,7 @@ from person
 union
 select first_name from persons where first_name ilike '%o%';
 --GROUP BY
-select category as name,sum(price)
+select category as name,count(product_name)
 from sales
 group by category;
 select product_name as name,sum(price) as total_price
@@ -97,4 +97,5 @@ select count(*)as num,category
 from sales
 group by category
 having count(*)>6;
+--string_agg для выведение всех название у одного обьекта
 
