@@ -1,7 +1,5 @@
 package Lesson26.JDBC.Homework;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
@@ -29,13 +27,13 @@ public class Task {
         String password = "postgres";
         String response = "";
         String sql = "select * from continents order by id";
-        List<Continents> continents = new ArrayList<>();
+        List<Continent> continents = new ArrayList<>();
 
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             PreparedStatement PS = connection.prepareStatement(sql);
             ResultSet rs = PS.executeQuery();
             while (rs.next()) {
-                continents.add(new Continents(rs.getInt("id"), rs.getString("name")));
+                continents.add(new Continent(rs.getInt("id"), rs.getString("name")));
             }
             response = gson.toJson(continents);
             he.sendResponseHeaders(200, response.getBytes().length);
